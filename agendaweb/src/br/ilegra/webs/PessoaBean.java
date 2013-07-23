@@ -10,63 +10,37 @@ import br.ilegra.modelo.Pessoa;
 import br.ilegra.negocio.PessoaRN;
 import br.webservice.Validacao_Client;
 
-
-@ManagedBean(name="PessoaBean")
+@ManagedBean(name = "PessoaBean")
 @RequestScoped
 public class PessoaBean {
-	private Pessoa pessoa=new Pessoa();
+	private Pessoa pessoa = new Pessoa();
 	private List<Pessoa> lista;
-	private String retornoWeb=validarCpf(pessoa.getHp());
+	private String retornoWeb = validarCpf(pessoa.getHp());
+	PessoaRN pessoaRN = new PessoaRN();
 
-	
-	public String novo(){
-		this.pessoa=new Pessoa();
+	public String novo() {
+		this.pessoa = new Pessoa();
 		return "usuario";
 	}
-	
 
-	
-	public String salvar(){
-		
-			PessoaRN pessoaRN=new PessoaRN();
-			pessoaRN.salvar(pessoa);
-			
-			return null;
-			
-			
-					
-		
+	public String salvar() {
+
+		pessoaRN.salvar(pessoa);
+
+		return null;
+
 	}
-	
-	
-		
-	
-	public String validarCpf(String cep){
-		//String retorno = "";
+
+	public String validarCpf(String cep) {
+
 		Validacao_Client client = new Validacao_Client();
-	try {
-		 retornoWeb = client.validarCep(cep);
-	} catch (Exception e) {
-		e.printStackTrace();
+		try {
+			retornoWeb = client.validarCep(cep);
+		} catch (Exception e) {
+			e.toString();
+		}
+		return retornoWeb;
+		
 	}
-	return retornoWeb;
-	}
 
-	
-	
-	}
-	
-
-	
-	
-
-	
-
-	
-	
-	
-
-	
-
-
-
+}
