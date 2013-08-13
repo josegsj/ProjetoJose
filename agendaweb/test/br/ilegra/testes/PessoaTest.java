@@ -8,7 +8,7 @@ package br.ilegra.testes;
 
 import br.ilegra.modelo.Pessoa;
 import br.ilegra.negocio.PessoaRN;
-import br.ilegra.webs.PessoaBean;
+
 	
 	public class PessoaTest {
 
@@ -37,7 +37,7 @@ import br.ilegra.webs.PessoaBean;
 		}
 		
 		@Test
-		public void testPessoaEquals() {
+		public void testPessoaNotSame() {
 			Pessoa p = new Pessoa();
 			PessoaRN pe=new PessoaRN();
 			PessoaRN pe2=new PessoaRN();
@@ -45,9 +45,36 @@ import br.ilegra.webs.PessoaBean;
 			p.setEmail("email@email.com.br");
 			p.setTelefone("5112345678");
 			p.setEndereco("Rua das Flores, 45");
-			pe.salvar(p);		
+			pe.salvar(p);	
+			assertNotSame(pe, pe2);
+		}
+		
+		@Test
+		public void testPessoaequals() {
+			Pessoa p = new Pessoa();
+			PessoaRN pe=new PessoaRN();
+			PessoaRN pe2=new PessoaRN();
+			p.setNome("Cleber Damião dos Santos");
+			p.setEmail("email@email.com.br");
+			p.setTelefone("5112345678");
+			p.setEndereco("Rua das Flores, 45");
+			pe.salvar(p);	
+			pe2.salvar(p);
 			assertEquals(pe, pe2);
 		}
+		
+		public void testPessoaassert() {
+			Pessoa p = new Pessoa();
+			PessoaRN pe=new PessoaRN();
+			p.setNome("Cleber Damião dos Santos");
+			p.setEmail("email@email.com.br");
+			p.setTelefone("5112345678");
+			p.setEndereco("Rua das Flores, 45");
+			pe.salvar(p);	
+			if(p!=null)
+			assertTrue(true);
+		}
+		
 	
 		
 

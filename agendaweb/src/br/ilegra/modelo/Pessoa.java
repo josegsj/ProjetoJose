@@ -2,11 +2,11 @@ package br.ilegra.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@org.hibernate.annotations.FilterDef(name = "restrictToCurrentCompany", parameters = { @org.hibernate.annotations.ParamDef(name = "currentCompanyNumber", type = "int") })
-@org.hibernate.annotations.Filter(name = "restrictToCurrentCompany", condition = "company = :currentCompanyNumber")
+@Entity
 public class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1412516182542170556L;
