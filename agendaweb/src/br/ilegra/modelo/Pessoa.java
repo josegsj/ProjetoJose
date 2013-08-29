@@ -27,10 +27,9 @@ public class Pessoa implements Serializable {
 
 	}
 
-	public Pessoa(Integer id, String nome, String telefone, String endereco,
+	public Pessoa( String nome, String telefone, String endereco,
 			String email, String hp, String celular, String descricao) {
 		super();
-		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.endereco = endereco;

@@ -1,6 +1,9 @@
 package br.ilegra.controle;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,11 @@ import br.ilegra.negocio.PessoaRN;
 @WebServlet("/AgendaServlet")
 public class AgendaServlet extends HttpServlet {
 
+	WebApplicationContext ctx = WebApplicationContextUtils
+			.getRequiredWebApplicationContext(this.getServletContext());
+	Pessoa pessoa = new Pessoa();
+	PessoaRN pessoaRN = (PessoaRN) ctx.getBean("pessoaRn");
+
 	private static final long serialVersionUID = 1L;
 
 	public AgendaServlet() {
@@ -30,13 +38,24 @@ public class AgendaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		WebApplicationContext ctx = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(this.getServletContext());
-		PessoaRN pessoaRN = (PessoaRN) ctx.getBean("pessoaRn");
+		String action = request.getParameter("action");
 
-		Pessoa pessoa = new Pessoa();
-		System.out.println("entrou");
-		int i=0;
+		if (action.equals("inserir")) {
+			inserePessoa(request, response);
+		}
+
+		if (action.equals("delete")) {
+
+			deletePessoa(request, response);
+		}
+		
+		if (action.equals("pesquisar")) {
+			doService(request, response);
+		}
+		
+	}
+	public void setagendaServlet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String nome = request.getParameter("nome");
 		String celular = request.getParameter("celular");
 		String cep = request.getParameter("cep");
@@ -44,10 +63,7 @@ public class AgendaServlet extends HttpServlet {
 		String endereco = request.getParameter("endereco");
 		String email = request.getParameter("email");
 		String descricao = request.getParameter("descricao");
-		String action = request.getParameter("action");
 
-		
-		pessoa.setId(i++);
 		pessoa.setNome(nome);
 		pessoa.setCelular(celular);
 		pessoa.setTelefone(telefone);
@@ -55,9 +71,40 @@ public class AgendaServlet extends HttpServlet {
 		pessoa.setDescricao(descricao);
 		pessoa.setEmail(email);
 		pessoa.setEndereco(endereco);
-		if (action.equals("inserir")) {
-			pessoaRN.salvar(pessoa);
-		}
+
 	}
+
+	public void inserePessoa(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		setagendaServlet(request, response);
+
+		pessoaRN.salvar(pessoa);
+
+	}
+
+	public void deletePessoa(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		setagendaServlet(request, response);
+
+		pessoaRN.delete(pessoa);
+
+	}
+
+	protected void doService(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		List<Pessoa> listar = pessoaRN.listar();
+		request.setAttribute("listar", listar);
+
+		RequestDispatcher rd = request.getRequestDispatcher("pesquisar.jsp");
+		rd.forward(request, response);
+
+	}
+	
+	
+	
+	
 
 }

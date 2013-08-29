@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<form action="agenda" method="post">
+	<form action="AgendaServlet" method="post">
 
 		<h3>Meus contatos</h3>
 		<pre>		
@@ -22,15 +22,15 @@
 			CEP			<input type="text" size="50" name="hp" id="cep" /> 
 			Descricao   <input type="text" size="50" name="descricao" id="descricao" /> 
 			Email       <input type="text" size="50" name="email" id="email" /> 
-			Endereco   <input type="text" size="50" name="endereco" id="endereco" /> 
-			
+			Endereco   <input type="text" size="50" name="endereco" id="endereco" /> 	
 		</pre>
-
 		<center>
 			<input type="button" id="buttonInsert" name="acao" value="Inserir" />
+			<input type="button" id="buttonCancelar" name="acao" value="Cancelar"/>
+			<input type="button" id="buttonPesquisar"name="acao" value="pesquisar"/>
 			<input type="hidden" name="corrente" value="1" />
+		
 		</center>
-
 	</form>
 </body>
 </html>
